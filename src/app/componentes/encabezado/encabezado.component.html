@@ -1,0 +1,18 @@
+<div class="card mat-card" id="first-card">
+   <div id="profile-background"><img src="./assets/plant.jpg"  alt="banner del portfolio de Valentina Bertinat"></div>
+   <div id="info" style="padding: 16px;">
+     <div id="info-img">
+        <img class="profile-image" src="./assets/WhatsApp Image 2021-09-14 at 21.42.48.jpeg" alt="Imagen de Valentina Bertinat">
+        <div class="btn-edit"><a href="#" class="btn-right"><i class="fa fa-pen"></i></a></div>
+     </div>
+     <div id="info-data">
+        <div *ngIf="miPortfolio">
+           <h1>{{miPortfolio.nombre}}</h1>
+           <div id="info-company">{{miPortfolio.puesto}}</div>
+           <div id="info-contact">
+             <span>{{miPortfolio.ubicacion}}</span>
+           </div>
+        </div>
+      </div>
+   </div>
+</div>

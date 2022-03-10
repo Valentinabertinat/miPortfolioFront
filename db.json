@@ -1,0 +1,60 @@
+{ "Persona": [{
+    "nombre": "Valentina Daniela Bertinat",
+    "puesto": "Full Stack Developer",
+    "ubicacion": "Buenos Aires, Argentina",
+    "sobreMi": "ejjkefdnkfsfsdfbnndbf,sbf,sfb,sdbfdsbfdnsbfkdbfkdbksd"}],
+    
+    "educacion": [{
+        "instituto": "San José de Calasanz",
+        "titulo": "Bachiller en ciencias naturales",
+        "img": "assets/calasanz.png", 
+        "inicio": "2013",
+        "fin": "2019"
+    },
+    {
+        "instituto": "Universidad de Buenos Aires",
+        "titulo": "Ciencias Geológicas",
+        "img": "assets/uba.png",
+        "inicio": "2020",
+        "fin": "en curso"
+    },
+    {
+        "instituto": "Plataforma 5",
+        "titulo": "Curso introductorio a la programación",
+        "img": "assets/logop5.png",
+        "inicio": "2021",
+        "fin": "2021"
+    },
+    {
+        "instituto": "Digital House",
+        "titulo": "Diseño UX",
+        "img": "assets/digitalhouse1.png",
+        "inicio": "2022",
+        "fin": "en curso"
+    },
+    {
+        "instituto": "Argentina Programa",
+        "titulo": "Capacitación en programación con los cursos #SéProgramar y #YoProgramo",
+        "img": "assets/logocuadradoarg.png",
+        "inicio": "2021",
+        "fin": "2022"
+    }],
+    "habilidades": [{
+
+    }],
+    "proyectos": [{
+     "nombre": "Color Game",
+     "descripcion": "Es un simple juego que consiste en adivinar el color que representa al aleatorio código RGB en pantalla. Hecho con HTML, CSS y JavaScript.",
+     "img": "assets/colors.jpeg"
+    },
+    {
+        "nombre": "Weather Channel",
+        "descripcion": "Es un sitio que, gracias a la interacción con una API, muestra las condiciones meteorológicas de la ciudad ingresada. Hecho con HTML, CSS y JavaScript.",
+        "img": "assets/clima.jpg"
+    },
+    {
+        "nombre": "Mi Portfolio",
+        "descripcion": "puts ipsumorem ipsum dolor sit amet consecteius aliquam!Lorem ipsum dolor sit amet consecteius aliquam!",
+        "img": "assets/profile.jpg"
+    }]
+}

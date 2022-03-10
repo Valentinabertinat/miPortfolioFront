@@ -1,0 +1,30 @@
+<div class="card mat-card">
+    <div id="educacion">
+        <div class="card-titles">
+            <h2>Educación</h2>
+        </div>
+        <div>
+            <ul class="items-list">
+                <li *ngFor="let education of educacionLista" (onDeleteEducacion)="deleteItem(education)">
+                    <div class="data-container educacion1">
+                          <div class="logo-image-container">
+                               <img class="logo-image" [src]="education.img" alt="">
+                          </div>
+                            <div class="list-info">
+                               <div>
+                                  <h3>{{education.instituto}}</h3>
+                                  <p>{{education.titulo}}</p>
+                                  <p><time>{{education.inicio}}</time> - <time>{{education.fin}}</time></p>
+                               </div>
+                            </div>
+                    </div>
+                    <div class="data-control">
+                        <div class="btn-edit">
+                            <a class="btn-right" href="#"><i class="fa fa-pen"></i><i class="far fa-trash-alt" (click)="onDelete(education)"></i></a> 
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="card mat-card"> 
+    <div class="card-titles">
+        <h2>Proyectos</h2>
+    </div>
+    <div class="container">
+         <div class="row gy-2">
+             <div class="col-lg-4 col-md-4 lolo" *ngFor="let projects of proyectosLista">
+                 <div class="box h-100 d-flex p-4 flex-column carta" >
+                     <img [src]="projects.img" alt="">
+                     <h5>{{projects.nombre}}</h5>
+                     <p>{{projects.descripcion}}</p>
+                 </div>
+             </div>
+          </div>
+     </div>
+</div> 
