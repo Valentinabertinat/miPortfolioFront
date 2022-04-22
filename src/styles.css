@@ -271,15 +271,6 @@ nav button:hover{
     font-size: 18px;
 }
 
-.abajo{
-    border-bottom: 1px solid black;
-    padding-bottom: 10px;
-}
-
-.derecha{
-    border-right: 1px solid black;
-}
-
 .fotoDeCarta{
     height: 250px
 }

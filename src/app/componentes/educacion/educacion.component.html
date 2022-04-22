@@ -3,24 +3,24 @@
         <div class="card-titles">
             <h2>Educación</h2>
         </div>
-        <div>
+        <div id="main-container">
             <ul class="items-list">
-                <li *ngFor="let education of educacionLista" (onDeleteEducacion)="deleteItem(education)">
+                <li *ngFor="let educacion of educaciones">
                     <div class="data-container educacion1">
                           <div class="logo-image-container">
-                               <img class="logo-image" [src]="education.img" alt="">
+                               <img class="logo-image" [src]="educacion.url_foto" alt="">
                           </div>
                             <div class="list-info">
                                <div>
-                                  <h3>{{education.instituto}}</h3>
-                                  <p>{{education.titulo}}</p>
-                                  <p><time>{{education.inicio}}</time> - <time>{{education.fin}}</time></p>
+                                  <h3>{{educacion.nombreInstituto}}</h3>
+                                  <p>{{educacion.titulo}}</p>
+                                  <p><time>{{educacion.fechaInicio}}</time> - <time>{{educacion.fechaFin}}</time></p>
                                </div>
                             </div>
                     </div>
                     <div class="data-control">
                         <div class="btn-edit">
-                            <a class="btn-right" href="#"><i class="fa fa-pen"></i><i class="far fa-trash-alt" (click)="onDelete(education)"></i></a> 
+                            <a class="btn-right" (click)="onOpenModal(educacion, 'edit')"><i class="fa fa-pen"></i></a><a (click)="onOpenModal(educacion, 'delete')"><i class="far fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </li>
@@ -28,3 +28,67 @@
         </div>
     </div>
 </div>
+<!-- Edit Modal -->
+<div class="modal fade" id="updateEducacionModal" tabindex="-1" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateEmployeeModalLabel">Editar datos de tu educación</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm="ngForm">
+                <div class="form-group">
+                   <label for="name">Nombre del instituto</label>
+                   <input type="text" ngModel="{{editEducacion?.nombreInstituto}}" name="nombreInstituto" class="form-control" id="nombreInstituto" aria-describedby="emailHelp" placeholder="Ingrese el nombre del instituto educativo">
+                </div>
+                <input type="hidden" ngModel="{{editEducacion?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+                <div class="form-group">
+                   <label for="email">Título</label>
+                   <input type="text" ngModel="{{editEducacion?.titulo}}" name="titulo" class="form-control" id="titulo" placeholder="Ingrese el título obtenido">
+                </div>
+                <div class="form-group">
+                   <label for="phone">Año de inicio</label>
+                   <input type="text" ngModel="{{editEducacion?.fechaInicio}}" name="fechaInicio" class="form-control" id="fechaInicio" placeholder="Ingrese el año de inicio">
+                </div>
+                <div class="form-group">
+                   <label for="phone">Año de finalización</label>
+                   <input type="text" ngModel="{{editEducacion?.fechaFin}}" name="fechaFin" class="form-control" id="fechaFin" placeholder="Ingrese el año de finalización">
+                </div>
+                <div class="form-group">
+                    <label for="phone">URL del logo del instituto</label>
+                    <input type="text" ngModel="{{editEducacion?.url_foto}}" name="url_foto" class="form-control" id="url_foto" placeholder="Ingrese la URL del logo del instituto">
+                 </div>
+                <div class="modal-footer">
+                   <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                   <button (click)="onUpdateEducacion(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar cambios</button>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteEducacionModal" tabindex="-1" aria-labelledby="deleteModelLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="deleteModelLabel">Borrar datos educativos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>¿Está segurx que quiere eliminar definitivamente sus datos educativos en {{deleteEducacion?.nombreInstituto}}?</p>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+               <button (click)="onDeleteEducacion(deleteEducacion.id)" class="btn btn-danger" data-dismiss="modal">Si</button>
+            </div>
+         </div>
+      </div>
+   </div>
+ </div>
+ 

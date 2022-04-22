@@ -1,8 +1,42 @@
-<div class="card mat-card">
+<div class="card mat-card" id="main-container1"  *ngFor="let sobremi of sobremis">
+    <div class="sobremicaja">
     <div class="card-titles">
         <h2>Sobre mi</h2>
+    </div>
+    <div class="data-control">
+        <div class="btn-edit">
+            <a class="btn-right" (click)="onOpenModal(sobremi, 'edit')"><i class="fa fa-pen"></i></a>
+        </div>
+    </div>
+   </div>
+    <div>
+         <p id="text-acercade">{{sobremi.descripcion}}</p>
     </div>  
-    <div *ngIf="miPortfolio">
-         <p id="text-acercade">{{miPortfolio.sobreMi}}</p>
-    </div>  
- </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateSobremiModal" tabindex="-1" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateEmployeeModalLabel">Editar datos personales</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm="ngForm">
+                <div class="form-group">
+                   <label for="name">Descripción personal</label>
+                   <input type="text" ngModel="{{editSobremi?.descripcion}}" name="descripcion" class="form-control" id="descripcion" aria-describedby="emailHelp" placeholder="Ingrese una descripción">
+                </div>
+                <input type="hidden" ngModel="{{editSobremi?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+                <div class="modal-footer">
+                   <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                   <button (click)="onUpdateSobremi(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Guardar cambios</button>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>

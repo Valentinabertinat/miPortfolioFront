@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Persona } from './persona';
 
 @Injectable({
@@ -8,15 +9,24 @@ import { Persona } from './persona';
 })
 export class PersonaService {
 
-  constructor(private http:HttpClient) { 
-    console.log("El Servicio de Portfolio está corriendo");
+  private apiServeUrl = environment.apiBaseUrl;
+
+  constructor(private http:HttpClient) {}
+
+  public getPersonas(): Observable<Persona[]>{
+    return this.http.get<Persona[]>(`${this.apiServeUrl}/persona/all`);
   }
 
-  obtenerDatosPersona():Observable<any>{
-   return this.http.get('./assets/data/persona.json');
+  public addPersona(persona: Persona): Observable<Persona> {
+    return this.http.post<Persona>(`${this.apiServeUrl}/persona/add`, persona);
   }
 
-  guardarDatosPersona(persona:Persona):Observable<any>{
-    return this.http.post('http://localhost:3000/posts',persona);
+  public updatePersona(persona: Persona): Observable<Persona> {
+    return this.http.put<Persona>(`${this.apiServeUrl}/persona/update`, persona);
   }
+
+  public deletePersona(personaId: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiServeUrl}/persona/delete/${personaId}`);
+  }
+
 }

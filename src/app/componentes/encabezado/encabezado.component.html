@@ -1,18 +1,67 @@
-<div class="card mat-card" id="first-card">
-   <div id="profile-background"><img src="./assets/plant.jpg"  alt="banner del portfolio de Valentina Bertinat"></div>
-   <div id="info" style="padding: 16px;">
-     <div id="info-img">
-        <img class="profile-image" src="./assets/WhatsApp Image 2021-09-14 at 21.42.48.jpeg" alt="Imagen de Valentina Bertinat">
-        <div class="btn-edit"><a href="#" class="btn-right"><i class="fa fa-pen"></i></a></div>
-     </div>
+<div class="card mat-card" id="first-card" *ngFor="let persona of personas">
+   <div id="main-container">
+   <div id="profile-background"><img [src]="persona.url_foto_banner"  alt="banner del portfolio de Valentina Bertinat"></div>
+   <div id="info" style="padding: 20px;">
+      <div id="info-img">
+         <img class="profile-image" [src]="persona.url_foto" alt="Imagen de Valentina Bertinat">
+      </div> 
+      <!--[src]="persona.url_foto"-->
      <div id="info-data">
-        <div *ngIf="miPortfolio">
-           <h1>{{miPortfolio.nombre}}</h1>
-           <div id="info-company">{{miPortfolio.puesto}}</div>
+        <div>
+           <h1>{{persona?.nombre}}</h1>
+           <div id="info-company">{{persona?.puesto}}</div>
            <div id="info-contact">
-             <span>{{miPortfolio.ubicacion}}</span>
+             <span>{{persona?.ubicacion}}</span>
            </div>
         </div>
+        <div class="btn-edit"><a (click)="onOpenModal(persona, 'edit')" class="btn-right"><i class="fa fa-pen"></i></a></div>
       </div>
    </div>
+   </div>
 </div>
+<!-- Edit Modal -->
+<div class="modal fade" id="updateEmployeeModal" tabindex="-1" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="updateEmployeeModalLabel">Editar datos personales</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #editForm="ngForm">
+               <div class="form-group">
+                  <label for="name">Nombre y apellido</label>
+                  <input type="text" ngModel="{{editPersona?.nombre}}" name="nombre" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Name">
+               </div>
+               <input type="hidden" ngModel="{{editPersona?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+               <div class="form-group">
+                  <label for="email">Correo electrónico</label>
+                  <input type="email" ngModel="{{editPersona?.correo}}" name="correo" class="form-control" id="correo" placeholder="Email">
+               </div>
+               <div class="form-group">
+                  <label for="phone">Nombre del puesto</label>
+                  <input type="text" ngModel="{{editPersona?.puesto}}" name="puesto" class="form-control" id="puesto" placeholder="Job title">
+               </div>
+               <div class="form-group">
+                  <label for="phone">Ubicación</label>
+                  <input type="text" ngModel="{{editPersona?.ubicacion}}" name="ubicacion" class="form-control" id="ubicacion" placeholder="Ingrese su ubicación">
+               </div>
+               <div class="form-group">
+                  <label for="phone">URL de la foto de perfil</label>
+                  <input type="text" ngModel="{{editPersona?.url_foto}}" name="url_foto" class="form-control" id="url_foto" placeholder="Ingrese URL de la foto de perfil">
+               </div>
+               <div class="form-group">
+                  <label for="phone">URL de la foto del banner</label>
+                  <input type="text" ngModel="{{editPersona?.url_foto_banner}}" name="url_foto_banner" class="form-control" id="url_foto_banner" placeholder="Ingrese URL de la foto del banner">
+               </div>
+               <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                  <button (click)="onUpdatePersona(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Guardar cambios</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+ </div>
