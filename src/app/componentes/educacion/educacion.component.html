@@ -1,26 +1,27 @@
 <div class="card mat-card">
     <div id="educacion">
-        <div class="card-titles">
+        <div class="card-titles" id="edu">
             <h2>Educación</h2>
+            <a (click)="onOpenModal('add', null!)" *ngIf="isAdmin" class="btn-right"><i class="fa fa-plus"><span class="sr-only">(current)</span></i></a>
         </div>
         <div id="main-container">
             <ul class="items-list">
                 <li *ngFor="let educacion of educaciones">
                     <div class="data-container educacion1">
-                          <div class="logo-image-container">
-                               <img class="logo-image" [src]="educacion.url_foto" alt="">
-                          </div>
-                            <div class="list-info">
-                               <div>
-                                  <h3>{{educacion.nombreInstituto}}</h3>
-                                  <p>{{educacion.titulo}}</p>
-                                  <p><time>{{educacion.fechaInicio}}</time> - <time>{{educacion.fechaFin}}</time></p>
-                               </div>
-                            </div>
+                       <div class="logo-image-container">
+                            <img class="logo-image" [src]="educacion.url_foto" alt="Logo de {{educacion.nombreInstituto}}">
+                       </div>
+                       <div class="list-info">
+                         <div>
+                            <h3>{{educacion.nombreInstituto}}</h3>
+                            <p>{{educacion.titulo}}</p>
+                            <p><time>{{educacion.fechaInicio}}</time> - <time>{{educacion.fechaFin}}</time></p>
+                         </div>
+                       </div>
                     </div>
                     <div class="data-control">
                         <div class="btn-edit">
-                            <a class="btn-right" (click)="onOpenModal(educacion, 'edit')"><i class="fa fa-pen"></i></a><a (click)="onOpenModal(educacion, 'delete')"><i class="far fa-trash-alt"></i></a>
+                           <a class="btn-right" (click)="onOpenModal('edit', educacion)" *ngIf="isAdmin"><i class="fa fa-pen"></i></a><a (click)="onOpenModal('delete', educacion)" *ngIf="isAdmin"><i class="far fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </li>
@@ -33,10 +34,8 @@
     <div class="modal-dialog" role="document">
        <div class="modal-content">
           <div class="modal-header">
-             <h5 class="modal-title" id="updateEmployeeModalLabel">Editar datos de tu educación</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-             </button>
+             <h5 class="modal-title" id="updateEmployeeModalLabel">Editar datos educativos</h5>
+             <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
           </div>
           <div class="modal-body">
              <form #editForm="ngForm">
@@ -50,7 +49,7 @@
                    <input type="text" ngModel="{{editEducacion?.titulo}}" name="titulo" class="form-control" id="titulo" placeholder="Ingrese el título obtenido">
                 </div>
                 <div class="form-group">
-                   <label for="phone">Año de inicio</label>
+                   <label for="phone">Año de ingreso</label>
                    <input type="text" ngModel="{{editEducacion?.fechaInicio}}" name="fechaInicio" class="form-control" id="fechaInicio" placeholder="Ingrese el año de inicio">
                 </div>
                 <div class="form-group">
@@ -62,7 +61,7 @@
                     <input type="text" ngModel="{{editEducacion?.url_foto}}" name="url_foto" class="form-control" id="url_foto" placeholder="Ingrese la URL del logo del instituto">
                  </div>
                 <div class="modal-footer">
-                   <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                   <button type="button" id="" data-dismiss="modal" class="btn btn-secondary no">Cancelar</button>
                    <button (click)="onUpdateEducacion(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar cambios</button>
                 </div>
              </form>
@@ -77,18 +76,56 @@
       <div class="modal-content">
          <div class="modal-header">
             <h5 class="modal-title" id="deleteModelLabel">Borrar datos educativos</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+            <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
          </div>
          <div class="modal-body">
-            <p>¿Está segurx que quiere eliminar definitivamente sus datos educativos en {{deleteEducacion?.nombreInstituto}}?</p>
+            <p>¿Está seguro que quiere eliminar definitivamente sus datos educativos en {{deleteEducacion?.nombreInstituto}}?</p>
             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-               <button (click)="onDeleteEducacion(deleteEducacion.id)" class="btn btn-danger" data-dismiss="modal">Si</button>
+               <button type="button" class="btn btn-secondary no" data-dismiss="modal">No</button>
+               <button (click)="onDeleteEducacion(deleteEducacion!.id)" class="btn btn-danger" data-dismiss="modal">Si</button>
             </div>
          </div>
       </div>
    </div>
- </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addEducacionModal" role="dialog" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="addEmployeeModalLabel">Agregar estudios</h5>
+           <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+        </div>
+        <div class="modal-body">
+           <form #addForm="ngForm" (ngSubmit)="onAddEducacion(addForm)">
+              <div class="form-group">
+                 <label for="name">Nombre del instituto</label>
+                 <input type="text" ngModel name="nombreInstituto" class="form-control" id="nombreInstituto" placeholder="Ingrese el nombre del instituto educativo" required>
+              </div>
+              <div class="form-group">
+                 <label for="email">Título</label>
+                 <input type="text" ngModel name="titulo" class="form-control" id="titulo" placeholder="Ingrese el título obtenido" required>
+              </div>
+              <div class="form-group">
+               <label for="email">Año de ingreso</label>
+               <input type="number" ngModel name="fechaInicio" class="form-control" id="fechaInicio" placeholder="Ingrese el año de ingreso" required>
+            </div>
+            <div class="form-group">
+               <label for="email">Año de finalización</label>
+               <input type="number" ngModel name="fechaFin" class="form-control" id="fechaFin" placeholder="Ingrese el año de finalización" required>
+            </div>
+            <div class="form-group">
+               <label for="email">URL del logo del instituto</label>
+               <input type="text" ngModel name="url_foto" class="form-control" id="url_foto" placeholder="Ingrese la URL del logo del instituto" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-habilidad-form" class="btn btn-secondary no" data-dismiss="modal">Cancelar</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Guardar</button>
+           </div>
+         </form>
+      </div>
+     </div>
+   </div>
+</div>
  

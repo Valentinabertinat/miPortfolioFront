@@ -1,3 +1,9 @@
 .btn-edit{
     display: flex;
 }
+
+#edu{
+    display: flex;
+    justify-content: space-between;
+}
+

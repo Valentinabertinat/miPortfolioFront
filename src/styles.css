@@ -1,9 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    font-family: 'Sarabun', sans-serif;
+}
 
 body{
     background-color: #111;
     margin-top: 80px;
 }
+
 .mat-card{
   border-radius: 32px;
   margin: 10px 25px;
@@ -18,7 +21,6 @@ body{
 div#profile-background{
     display: flex;
     z-index: 1;
-    
 }
 
 div#profile-background img{
@@ -89,10 +91,7 @@ div#info-data ul#info-details li a h2{
     font-size: 1rem;
     font-weight: 500;
     align-self: center;
-    
 }
-
-
  
 ul.items-list{
     list-style: none inside;
@@ -101,7 +100,6 @@ ul.items-list{
 ul.items-list li{
    display: flex;
    margin: 30px 0px;
-   
 }
 
 ul.items-list li div.data-container{
@@ -117,7 +115,6 @@ ul.items-list li div.data-container a{
 .educacion1{
     display: flex;
     align-items: center;
-  
 }
 
 .btn-right {
@@ -160,8 +157,7 @@ nav{
     z-index: 20;
     width: 100%;
     margin-top: -80px;
-    opacity: .9;
-    
+    opacity: .9;  
 }
 
 nav img{
@@ -185,7 +181,6 @@ nav span{
     font-size: 1em;
 }
 
-
 nav button{
     border-radius: 8px;
     border: none;
@@ -200,22 +195,18 @@ nav button{
 nav button:hover{
     background-color: #111;
     transition: .3s;
-    color: white;
-    
-    
+    color: white; 
 }
 
 .logo-image-container{
     display: inline-block;
     height: 90px;
-    
 }
 
 .logo-image{
     width: 90px;
     border-radius: 50%;
-    border: black 1px solid;
-    
+    border: black 1px solid;  
 }
 
 .list-info{
@@ -234,10 +225,6 @@ nav button:hover{
     margin-left: 10px;
 }
 
-* {
-    font-family: 'Sarabun', sans-serif;
-}
-
 #info-data{
     margin-top: 10px;
 }
@@ -254,38 +241,32 @@ nav button:hover{
 .habilidades{
     text-align: center;
     padding-top: 10px;
-    
 }
 
 .divHabilidades{
     display: flex;
     justify-content: space-between;
 }
- 
-.estrella{
- color: orange;    
- font-size: 25px;
-}
 
 .habilidad{
     font-size: 18px;
 }
 
-.fotoDeCarta{
-    height: 250px
+.close {
+    color: #464646;
+    font-size: 30px; 
 }
 
-.carta{
-    border: #111 solid 1px;
-    border-radius: 5px;
+.close:hover, .close:focus {
+    color: black;
+    cursor: pointer;
+}
+
+.no{
     background-color: #111;
-    color: white;
-    min-height: 500px;
 }
 
-.lolo{
-    min-height: 500px;
+input{
+    margin-bottom: 10px;
 }
-
-/*aca va ejemplo */
 

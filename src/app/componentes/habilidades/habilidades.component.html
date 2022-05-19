@@ -1,28 +1,31 @@
-<div class="card mat-card" >
+<div class="card mat-card">
     <div class="divHabilidades">
-     <div class="card-titles">
-         <h2>Habilidades</h2>
-     </div>
-     <div class="data-control" >
-         <div class="btn-edit"><a (click)="onOpenModal('add', null!)" class="btn-right"><i class="fa fa-plus"><span class="sr-only">(current)</span></i></a></div>
-     </div>
+       <div class="card-titles">
+            <h2>Habilidades</h2>
+       </div>
+       <div class="data-control" >
+            <div class="btn-edit"><a (click)="onOpenModal('add', null!)" *ngIf="isAdmin" class="btn-right"><i class="fa fa-plus"><span class="sr-only">(current)</span></i></a></div>
+       </div>
     </div>
-    <div class="container" *ngFor="let habilidad of habilidades">
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6 habilidades abajo derecha">
-              <span class="habilidad">{{habilidad.habilidad}}</span>
-               <br>
-              <div class="progress">
-                <div class="progress-bar bg-info" role="progressbar" [ngStyle]="{'width': habilidad.porcentaje + '%'}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-        </div>
-        <div class="data-control">
-            <div class="btn-edit">
-                <a class="btn-right" (click)="onOpenModal('edit', habilidad)"><i class="fa fa-pen"></i></a><a (click)="onOpenModal('delete', habilidad)"><i class="far fa-trash-alt"></i></a>
-            </div>
-        </div>
-    </div>
+    <ul>
+        <div class="container">
+           <div class="row">
+             <li class="lista col-sm-12 col-md-6 col-lg-4" *ngFor="let habilidad of habilidades">
+                <div class="habilidades">
+                   <div class="top">
+                       <span class="habilidad">{{habilidad.habilidad}}</span>
+                       <div class="btn-edit">
+                          <a class="btn-right" (click)="onOpenModal('edit', habilidad)" *ngIf="isAdmin"><i class="fa fa-pen"></i></a><a (click)="onOpenModal('delete', habilidad)" *ngIf="isAdmin"><i class="far fa-trash-alt"></i></a>
+                       </div>
+                   </div>
+                   <div class="progress" id="barra">
+                      <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" [ngStyle]="{'width': habilidad.porcentaje + '%'}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>
+                </div> 
+             </li>
+          </div>
+       </div>
+    </ul>
 </div>
 
 <!-- Edit Modal -->
@@ -31,9 +34,7 @@
        <div class="modal-content">
           <div class="modal-header">
              <h5 class="modal-title" id="updateEmployeeModalLabel">Editar Habilidad</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-             </button>
+             <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
           </div>
           <div class="modal-body">
              <form #editForm="ngForm">
@@ -44,10 +45,10 @@
                 <input type="hidden" ngModel="{{editHabilidad?.id}}" name="id" class="form-control" id="id" placeholder="Email">
                 <div class="form-group">
                    <label for="email">Porcentaje</label>
-                   <input type="number" ngModel="{{editHabilidad?.porcentaje}}" name="porcentaje" class="form-control" id="porcentaje" placeholder="Ingrese el porcentaje">
+                   <input type="number" ngModel="{{editHabilidad?.porcentaje}}" name="porcentaje" class="form-control" id="porcentaje" placeholder="Ingrese el % aprox. de conocimiento sobre la habilidad">
                 </div>
                 <div class="modal-footer">
-                   <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                   <button type="button" id="" data-dismiss="modal" class="btn btn-secondary no">Cancelar</button>
                    <button (click)="onUpdateHabilidad(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar cambios</button>
                 </div>
              </form>
@@ -62,14 +63,12 @@
        <div class="modal-content">
           <div class="modal-header">
              <h5 class="modal-title" id="deleteModelLabel">Borrar datos educativos</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-             </button>
+             <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
           </div>
           <div class="modal-body">
-             <p>¿Está segurx que quiere eliminar definitivamente la sección de {{deleteHabilidad?.habilidad}}?</p>
+             <p>¿Está seguro que quiere eliminar definitivamente la sección de {{deleteHabilidad?.habilidad}}?</p>
              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-secondary no" data-dismiss="modal">No</button>
                 <button (click)="onDeleteHabilidad(deleteHabilidad!.id)" class="btn btn-danger" data-dismiss="modal">Si</button>
              </div>
           </div>
@@ -77,32 +76,30 @@
     </div>
 </div>
  
-<!-- Add Employee Modal -->
+<!-- Add Modal -->
 <div class="modal fade" id="addHabilidadModal" role="dialog" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+            <h5 class="modal-title" id="addEmployeeModalLabel">Agregar habilidad</h5>
+            <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
          </div>
          <div class="modal-body">
             <form #addForm="ngForm" (ngSubmit)="onAddHabilidad(addForm)">
-            <div class="form-group">
-               <label for="name">Nombre</label>
-               <input type="text" ngModel name="habilidad" class="form-control" id="habilidad" placeholder="Name" required>
-            </div>
-            <div class="form-group">
-               <label for="email">Porcentaje</label>
-               <input type="number" ngModel name="porcentaje" class="form-control" id="porcentaje" placeholder="Email" required>
-            </div>
-            <div class="modal-footer">
-               <button type="button" id="add-habilidad-form" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-            </form>
-         </div>
+               <div class="form-group">
+                  <label for="name">Nombre de la habilidad</label>
+                  <input type="text" ngModel name="habilidad" class="form-control" id="habilidad" placeholder="Ingrese el nombre de la habilidad" required>
+               </div>
+               <div class="form-group">
+                  <label for="email">Porcentaje</label>
+                  <input type="number" ngModel name="porcentaje" class="form-control" id="porcentaje" placeholder="Ingrese el % aprox. de conocimiento sobre la habilidad" required>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" id="add-habilidad-form" class="btn btn-secondary no" data-dismiss="modal">Cancelar</button>
+                  <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Guardar</button>
+               </div>
+          </form>
+       </div>
       </div>
     </div>
 </div>

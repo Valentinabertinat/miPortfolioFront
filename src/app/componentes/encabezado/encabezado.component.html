@@ -14,7 +14,7 @@
              <span>{{persona?.ubicacion}}</span>
            </div>
         </div>
-        <div class="btn-edit"><a (click)="onOpenModal(persona, 'edit')" class="btn-right"><i class="fa fa-pen"></i></a></div>
+        <div class="btn-edit"><a (click)="onOpenModal(persona, 'edit')" *ngIf="isAdmin" class="btn-right"><i class="fa fa-pen"></i></a></div>
       </div>
    </div>
    </div>

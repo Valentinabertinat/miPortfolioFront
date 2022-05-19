@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { LoginUsuario } from 'src/app/login-usuario';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TokenService } from 'src/app/servicios/token.service';
+
 
 
 
@@ -11,54 +13,49 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
-  email= '';
-  password= '';
+  isLogged = false;
+  isLoginFail = false;
+  loginUsuario!:LoginUsuario;
+  nombreUsuario!: string;
+  password!:string;
+  roles:string[]=[];
+  errMsj!: string;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
-    this.form = this.formBuilder.group({
-      password:['', [Validators.required, Validators.minLength(8)]],
-      email:['', [Validators.required, Validators.email]]
-    })
-  }
-
-  //copiado de arg programa
-  Login(){
-    this.authService.login(this.email, this.password);
-  }
+  constructor(
+    private tokenService: TokenService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    if (this.tokenService.getToken()) {
+      this.isLogged = true;
+      this.isLoginFail = false;
+      this.roles = this.tokenService.getAuthorities();
+    }
   }
 
-  get Password(){
-    return this.form.get("password");
-  }
- 
-  get Mail(){
-   return this.form.get("email");
-  }
+  onLogin(): void {
+    this.loginUsuario = new LoginUsuario(this.nombreUsuario, this.password);
+    this.authService.login(this.loginUsuario).subscribe({
+      next: (data) => {
+        this.isLogged = true;
+        this.isLoginFail = false;
 
-  get PasswordValid(){
-    return this.Password?.touched && !this.Password?.valid;
+        this.tokenService.setToken(data.token);
+        this.tokenService.setUsername(data.nombreUsuario);
+        this.tokenService.setAuthorities(data.authorities);
+        this.roles = data.authorities;
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.isLogged = false;
+        this.isLoginFail = true;
+        this.errMsj = err.error.message;
+      }
+    });
   }
-
-  get MailValid() {
-    return false
-  }
- 
-
-  onEnviar(event: Event){
-    // Detenemos la propagación o ejecución del compotamiento submit de un form
-    event.preventDefault;
-  }
-
-
-  //del video de yt falta completar if else para redirigir
-  ingresar(){
-    const email = this.form.value.email;
-    const password = this.form.value.password;
-    console.log(password)
-  }
+  
  
 
 }

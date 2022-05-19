@@ -3,6 +3,7 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 import { Persona } from 'src/app/servicios/persona';
 import { PersonaService } from 'src/app/servicios/persona.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-encabezado',
@@ -13,10 +14,19 @@ export class EncabezadoComponent implements OnInit {
   public personas: Persona[] = [];
   public editPersona!: Persona;
 
-  constructor(private personaService: PersonaService){}
+  roles: string[] = [];
+  isAdmin = false;
+
+  constructor(private personaService: PersonaService, private tokenService: TokenService){}
 
   ngOnInit(): void {
     this.getPersonas();
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach(role => {
+      if (role === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
+    });
   }
 
   public getPersonas(): void {

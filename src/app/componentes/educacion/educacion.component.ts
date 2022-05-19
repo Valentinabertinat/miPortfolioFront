@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { EducacionService } from 'src/app/servicios/educacion.service';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
+import { TokenService } from 'src/app/servicios/token.service';
 import { Educacion } from './educacion';
 
 @Component({
@@ -11,13 +13,23 @@ import { Educacion } from './educacion';
 })
 export class EducacionComponent implements OnInit {
   public educaciones: Educacion[] = [];
-  public editEducacion!: Educacion;
-  public deleteEducacion!: Educacion;
+  public editEducacion: Educacion | undefined;
+  public deleteEducacion: Educacion |undefined;
 
-  constructor(private educacionService: EducacionService){}
+  roles: string[] = [];
+  isAdmin = false;
+
+
+  constructor(private educacionService: EducacionService, private tokenService: TokenService){}
 
   ngOnInit(): void {
     this.getEducaciones();
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach(role => {
+      if (role === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
+    });
   }
 
   public getEducaciones(): void {
@@ -27,6 +39,21 @@ export class EducacionComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
+      }
+    );
+  }
+
+  public onAddEducacion(addForm: NgForm): void {
+    document.getElementById('add-habilidad-form')?.click();
+    this.educacionService.addEducacion(addForm.value).subscribe(
+      (response: Educacion) => {
+        console.log(response);
+        this.getEducaciones();
+        addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        addForm.reset();
       }
     );
   }
@@ -55,7 +82,7 @@ export class EducacionComponent implements OnInit {
     );
   }
 
-  public onOpenModal(educacion: Educacion, mode: String): void {
+  public onOpenModal(mode: String, educacion?: Educacion): void {
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -68,6 +95,9 @@ export class EducacionComponent implements OnInit {
     if (mode === 'delete'){
       this.deleteEducacion = educacion;
       button.setAttribute('data-target', '#deleteEducacionModal');
+    }
+    if (mode === 'add'){
+      button.setAttribute('data-target', '#addEducacionModal');
     }
     container?.appendChild(button);
     button.click();

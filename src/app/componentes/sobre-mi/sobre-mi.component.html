@@ -5,7 +5,7 @@
     </div>
     <div class="data-control">
         <div class="btn-edit">
-            <a class="btn-right" (click)="onOpenModal(sobremi, 'edit')"><i class="fa fa-pen"></i></a>
+            <a class="btn-right" (click)="onOpenModal(sobremi, 'edit')" *ngIf="isAdmin"><i class="fa fa-pen"></i></a>
         </div>
     </div>
    </div>
@@ -33,7 +33,7 @@
                 <input type="hidden" ngModel="{{editSobremi?.id}}" name="id" class="form-control" id="id" placeholder="Email">
                 <div class="modal-footer">
                    <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
-                   <button (click)="onUpdateSobremi(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Guardar cambios</button>
+                   <button (click)="onUpdateSobremi(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar cambios</button>
                 </div>
              </form>
           </div>

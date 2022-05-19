@@ -15,6 +15,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './componentes/login/login.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { AdminComponent } from './componentes/admin/admin.component';
+import { interceptorProvider } from './servicios/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { AdminComponent } from './componentes/admin/admin.component';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [interceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

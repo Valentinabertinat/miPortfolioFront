@@ -5,6 +5,7 @@ import { PersonaService } from 'src/app/servicios/persona.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Sobremi } from './sobremi';
 import { SobremiService } from 'src/app/servicios/sobremi.service';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-sobre-mi',
@@ -15,10 +16,19 @@ export class SobreMiComponent implements OnInit {
   public sobremis: Sobremi[] = [];
   public editSobremi!: Sobremi;
 
-  constructor(private sobremiService: SobremiService){}
+  roles: string[] = [];
+  isAdmin = false;
+
+  constructor(private sobremiService: SobremiService, private tokenService: TokenService){}
 
   ngOnInit(): void {
     this.getSobremis();
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach(role => {
+      if (role === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
+    });
   }
 
   public getSobremis(): void {

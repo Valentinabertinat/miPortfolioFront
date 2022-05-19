@@ -3,6 +3,9 @@ import { Habilidad } from './habilidad';
 import { HabilidadService } from 'src/app/servicios/habilidad.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { routing } from 'src/app/app-routing.module.ts.module';
+import { Router } from '@angular/router';
+import { TokenService } from 'src/app/servicios/token.service';
 
 
 @Component({
@@ -15,12 +18,21 @@ export class HabilidadesComponent implements OnInit {
   public habilidades: Habilidad[] = [];
   public editHabilidad: Habilidad | undefined;
   public deleteHabilidad!: Habilidad | undefined;
+
+  roles: string[] = [];
+  isAdmin = false;
   
 
-  constructor(private habilidadService: HabilidadService){}
+  constructor(private habilidadService: HabilidadService, private router:Router, private tokenService: TokenService){}
 
   ngOnInit(): void {
     this.getHabilidades();
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach(role => {
+      if (role === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
+    });
   }
 
   public getHabilidades(): void {
@@ -34,14 +46,17 @@ export class HabilidadesComponent implements OnInit {
     );
   }
 
-  public onAddHabilidad(addForm: NgForm): void{
+  public onAddHabilidad(addForm: NgForm): void {
     document.getElementById('add-habilidad-form')?.click();
     this.habilidadService.addHabilidad(addForm.value).subscribe(
       (response: Habilidad) => {
         console.log(response);
+        this.getHabilidades();
+        addForm.reset();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
+        addForm.reset();
       }
     );
   }
