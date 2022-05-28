@@ -179,6 +179,7 @@ nav div {
 nav span{
     font-weight: bold;
     font-size: 1em;
+    margin-left: 10px;
 }
 
 nav button{
@@ -268,5 +269,15 @@ nav button:hover{
 
 input{
     margin-bottom: 10px;
+}
+
+@media(max-width:576px){
+    body{
+        margin-top: 100px;
+    }
+
+    nav{
+        margin-top: -100px;
+    }
 }
 

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "http://localhost:8080",
+  apiBaseUrl: "https://valenbertinatportfolio.herokuapp.com",
+  apiAuthUrl: "https://valenbertinatportfolio.herokuapp.com/auth/"
 };
 
 /*

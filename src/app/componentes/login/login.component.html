@@ -10,11 +10,6 @@
                     <li class="nav-item">
                          <a class="nav-link active" routerLink="/login">Login</a>
                     </li>
-               <!-- boton para crear nuevo usuario
-                    <li class="nav-item">
-                       <a class="nav-link activo" routerLink="/registro">nuevo usuario</a>
-                    </li>
-                 -->
                  </ul>
              </div>
              <div class="card-body">
@@ -32,10 +27,10 @@
                      <div class="form-group">
                          <button class="btn btn-outline-success btn-block" [disabled]="!f.valid">
                              <i class="fas fa-sign-in-alt"></i>Iniciar Sesión</button>
-                         <button class="btn btn-outline-success btn-block m-2" routerLink="/home">Cancelar</button>
+                         <button class="btn btn-outline-success btn-block m-2" routerLink="/">Cancelar</button>
                      </div>
                  </form>
-                 <div *ngIf="f.submitted && isLoginFail" class="alert alert-danger mt-3">Fail en el login: {{errMsj}}</div>
+                 <div *ngIf="f.submitted && isLoginFail" class="alert alert-danger mt-3">Fallo en el login: {{errMsj}}</div>
               </div>
          </div>
     </div>

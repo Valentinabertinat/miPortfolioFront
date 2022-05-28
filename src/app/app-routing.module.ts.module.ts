@@ -25,9 +25,8 @@ const routes: Routes = [
   {path: 'habilidades', component:HabilidadesComponent},
   {path: 'proyectos', component:ProyectosComponent},
   {path: 'login', component:LoginComponent},
-  {path: 'home', component:HomeComponent},
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: '**', redirectTo: 'home'},
+  {path: '', component:HomeComponent},
+  {path: '**', component:HomeComponent},
   { path: 'admin', component: AdminComponent }
 ];
 
